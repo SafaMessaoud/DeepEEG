@@ -13,13 +13,13 @@ CURRENT_DIR='${HOME}/DeepEEG'
 #Directory for saving and loading model checkpoints
 CHECKPOINT_DIR='${HOME}/DeepEEG/model/train'
 
+#The patient on which the testing is performed
 
 #File pattern of sharded TFRecord input files.
-INPUT_FILE_PATTERN='${HOME}/DeepEEG/data/tf_record_dir'
+INPUT_FILE_PATTERN='${HOME}/DeepEEG/data/train_dir'
 
 #Number of training steps
 NUMBER_OF_STEPS=1000000
-
 
 #Frequency at which loss and global step are logged
 LOG_EVERY_N_STEPS=1
@@ -40,7 +40,6 @@ python "${BUILD_SCRIPT}" \
 	"${CHECKPOINT_DIR}" \
 	"${INPUT_FILE_PATTERN}/s?"  \
 	--number_of_steps "${NUMBER_OF_STEPS}" \
-	--log_every_n_steps "${LOG_EVERY_N_STEPS}" \
 	--log_every_n_steps "${LOG_EVERY_N_STEPS}" \
 	--model_choice "${MODEL_CHOICE}" \
 		
