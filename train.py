@@ -99,8 +99,8 @@ def main():
     global_step=model.global_step,
     number_of_steps=args.number_of_steps,
     init_fn=model.init_fn,
-    save_summaries_secs=300,
-    save_interval_secs=300,
+    save_summaries_secs=model_config.save_summaries_secs,
+    save_interval_secs=model_config.save_interval_secs,
     saver=saver)
 
 if __name__ == "__main__":
