@@ -178,19 +178,19 @@ def generate_pickled_files(subj_num_file,feature_file,location_file,nb_time_wind
   #create a directory for every patients where every trial ia saved as a pickled file 
   #Args:
   #	subj_num_file: path to the matfile with the subject numbers
-	#	feature_file: path to the matfile with the EEG features
-	#	location_file: path to the electrode location file
-	#	nb_time_windows: number of time windows
-	#	nb_freq: number of frequencies for each trial
+  #	feature_file: path to the matfile with the EEG features
+  #	location_file: path to the electrode location file
+  #	nb_time_windows: number of time windows
+  #	nb_freq: number of frequencies for each trial
 
   feats = scipy.io.loadmat(feature_file)['features']
-	subj_nums = np.squeeze(scipy.io.loadmat(subj_num_file)['subjectNum'])
-	locs = scipy.io.loadmat(location_file)['A']
+  subj_nums = np.squeeze(scipy.io.loadmat(subj_num_file)['subjectNum'])
+  locs = scipy.io.loadmat(location_file)['A']
 
-	nb_samples=len(feats);
-	nb_electrodes=len(locs);
+  nb_samples=len(feats);
+  nb_electrodes=len(locs);
 
-	#extract the label
+  #extract the label
   Y=feats[:,-1]
   Y=Y.tolist()
 
