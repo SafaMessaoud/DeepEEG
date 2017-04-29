@@ -264,6 +264,7 @@ def main():
   #store all the trials for one patient in tf_records
   for i in range(len(patient_dir_list)):
     patient_dir='patient_data/'+patient_dir_list[i]
+    if not tf.gfile.IsDirectory(patient_dir): continue
     train_dataset=os.listdir(patient_dir)
     _process_dataset(patient_dir_list[i], train_dataset, args.nb_shards,args.nb_threads,args.tf_records_dir,patient_dir)
 
