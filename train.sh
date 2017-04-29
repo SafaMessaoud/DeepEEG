@@ -13,10 +13,47 @@ CURRENT_DIR='${HOME}/DeepEEG'
 #Directory for saving and loading model checkpoints
 CHECKPOINT_DIR='${HOME}/DeepEEG/model/train'
 
-#The patient on which the testing is performed
 
-#File pattern of sharded TFRecord input files.
+#Folder Containing the tf_records
+TF_RECORD_FOLDER='${HOME}/DeepEEG/data/tf_record_dir'
+
+#path to the evaluation directory
+EVAL_DIR='${HOME}/DeepEEG/data/eval_dir'
+
+#path to the testing directory
+TEST_DIR='${HOME}/DeepEEG/data/test_dir'
+
+#path to the training directory.
 INPUT_FILE_PATTERN='${HOME}/DeepEEG/data/train_dir'
+
+#create an evaluation directory
+mkdir -p ${EVAL_DIR}
+
+#create a test directory
+mkdir -p ${TEST_DIR}
+
+#create a train directory
+mkdir -p ${INPUT_FILE_PATTERN}
+
+#copy all the data in tf_record into train_dir
+cp -r ${TF_RECORD_FOLDER} ${INPUT_FILE_PATTERN}
+
+#path to the tf_record of the subject considered for testing
+TEST_SUBJ='${HOME}/DeepEEG/data/train_dir/s1'
+
+#path to the tf_record for evaluation
+EVAL_RECORD='${HOME}/DeepEEG/data/train_dir/eval'
+
+#copy PATIENT tf_record into test_dir and copy eval into eval_dir
+cp ${TEST_SUBJ} ${TEST_DIR}
+
+#copy the evaluation tf_record into eval_dir
+cp ${EVAL_RECORD} ${EVAL_DIR}
+
+#remove the eval tf_record and the subject considered for testing from the training directory
+rm ${TEST_SUBJ}
+rm ${EVAL_RECORD}
+
 
 #Number of training steps
 NUMBER_OF_STEPS=1000000
