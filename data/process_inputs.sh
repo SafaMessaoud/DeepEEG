@@ -14,19 +14,19 @@
 #####################################################################################
 
 #current directory
-WORK_DIR='DeepEEG/data'
+WORK_DIR='${HOME}/DeepEEG/data'
 
 #path to the directory with the TFRecords
-TF_RECORD_DIR='DeepEEG/data/tf_record_dir'
+TF_RECORD_DIR='${HOME}/DeepEEG/data/tf_record_dir'
 
 #path to the matfile with the subject numbers
-SUBJ_NUM_FILE='DeepEEG/data/trials_subNums.mat'
+SUBJ_NUM_FILE='${HOME}/DeepEEG/data/trials_subNums.mat'
 
 #path to the matfile with the EEG features
-FEATURE_FILE='DeepEEG/data/FeatureMat_timeWin.mat'
+FEATURE_FILE='${HOME}/DeepEEG/data/FeatureMat_timeWin.mat'
 
 #path to the electrode location file
-LOCATION_FILE='DeepEEG/data/Neuroscan_locs_orig.mat'
+LOCATION_FILE='${HOME}/DeepEEG/data/Neuroscan_locs_orig.mat'
 
 #number of time windows
 NB_TIME_WINDOWS=7
