@@ -36,6 +36,7 @@ import glob
 import scipy
 import numpy as np
 import tensorflow as tf
+import shutil
 
 
 def _int64_feature(value):
@@ -215,6 +216,19 @@ def generate_pickled_files(subj_num_file,feature_file,location_file,nb_time_wind
     pickle.dump(label,filehandler)
     filehandler.close()
   
+  #create directory to store the evaluation data
+  if not tf.gfile.IsDirectory('patient_data/eval'): tf.gfile.MakeDirs('patient_data/eval')
+  patient_dir_list= glob.glob('patient_data/s*')
+
+  #store all the trials for one patient in tf_records
+  for i in range(len(patient_dir_list)):
+    patient_dir=patient_dir_list[i]
+    dataset=os.listdir(patient_dir)
+    for j in range(0,20):
+      shutil.move(patient_dir+'/'+dataset[j],'patient_data/eval/')
+	
+	
+	
 def parse_arguments(parser):
   parser.add_argument('tf_records_dir', type=str,default= '/DeepEEG/tf_records_dir', metavar='<tf_records_dir>', help='The path to TF_Records')	
   parser.add_argument('subj_num_file', type=str,default= '/DeepEEG/data/trials_subNums.mat', metavar='<subj_num_file>', help='The path to mat file with the subject numbers')
