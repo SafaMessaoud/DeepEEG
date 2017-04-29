@@ -15,7 +15,7 @@ CHECKPOINT_DIR='${HOME}/DeepEEG/model/train'
 
 
 #File pattern of sharded TFRecord input files.
-INPUT_FILE_PATTERN='${HOME}/train_dir'
+INPUT_FILE_PATTERN='${HOME}/DeepEEG/data/tf_record_dir'
 
 #Number of training steps
 NUMBER_OF_STEPS=1000000
@@ -38,7 +38,7 @@ echo $CURRENT_DIR
 # Run the training script.
 python "${BUILD_SCRIPT}" \
 	"${CHECKPOINT_DIR}" \
-	"${INPUT_FILE_PATTERN}/train-?????-of-00016"  \
+	"${INPUT_FILE_PATTERN}/s?"  \
 	--number_of_steps "${NUMBER_OF_STEPS}" \
 	--log_every_n_steps "${LOG_EVERY_N_STEPS}" \
 	--log_every_n_steps "${LOG_EVERY_N_STEPS}" \
