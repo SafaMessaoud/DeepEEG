@@ -5,9 +5,9 @@
 # Date: February 2017                                                               #
 #                                                                                   #
 # Description:                                                                      #
-# 	The outputs of this script are sharded TFRecord files containing serialized     #
-# 	SequenceExample protocol buffers. See input_data.py for details of how          #
-# 	the SequenceExample protocol buffers are constructed.                           #
+#	The outputs of this script are sharded TFRecord files containing serialized #
+# 	SequenceExample protocol buffers. See input_data.py for details of how      #
+# 	the SequenceExample protocol buffers are constructed.                       #
 #                                                                                   #
 # usage:                                                                            #
 #  ./process_inputs.sh                                                              #
