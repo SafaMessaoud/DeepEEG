@@ -98,43 +98,23 @@ def evaluate_model(sess, model, global_step, summary_writer, summary_op,num_eval
   for i in range(num_eval_batches):
     cross_entropy_loss = sess.run([model.batch_loss])
     sum_losses = sum_losses+np.sum(cross_entropy_loss)
-
-        #compute accuracy
-        accuracy=sess.run([model.batch_accuracy])
-        sum_accuracies=sum_accuracies+np.sum(accuracy)
-
-        #compute recall
-        recall=sess.run([model.batch_recall])
-        sum_recalls=sum_recalls+np.sum(recall)
-
-        #compute precision
-        precision=sess.run([model.batch_precision])
-        sum_precisions=sum_precisions+np.sum(precision)
-
-
-        #compute F1 score
-        f1_score=sess.run([model.batch_f1_score])
-        sum_f1_score=sum_f1_score+np.sum(f1_score)
-
-
-        if not i % 100:
-            tf.logging.info("Computed evaluation metrics for %d of %d batches.", i + 1,num_eval_batches)
-
+    
+    #compute accuracy
+    accuracy=sess.run([model.batch_accuracy])
+    sum_accuracies=sum_accuracies+np.sum(accuracy)
+    
+    if not i % 100:
+      tf.logging.info("Computed evaluation metrics for %d of %d batches.", i + 1,num_eval_batches)
 
     eval_time = time.time() - start_time
 
     sum_losses=sum_losses/num_eval_batches
     sum_accuracies=sum_accuracies/num_eval_batches
-    sum_recalls=sum_recalls/num_eval_batches
-    sum_precisions=sum_precisions/num_eval_batches
-    sum_f1_score=sum_f1_score/num_eval_batches
+    
 
     tf.logging.info("sum_losses = %f (%.2g sec)", sum_losses, eval_time)
     tf.logging.info("sum_accuracies = %f (%.2g sec)", sum_accuracies, eval_time)
-    tf.logging.info("sum_recalls = %f (%.2g sec)", sum_recalls, eval_time)
-    tf.logging.info("sum_precisions = %f (%.2g sec)", sum_precisions, eval_time)
-    tf.logging.info("sum_f1_score = %f (%.2g sec)", sum_f1_score, eval_time)
-
+    
 
     # Log loss to the SummaryWriter.
     summary = tf.Summary()
@@ -150,30 +130,7 @@ def evaluate_model(sess, model, global_step, summary_writer, summary_op,num_eval
     value.tag = "accuracy"
     summary_writer.add_summary(summary, global_step)
 
-    # Log recall to the SummaryWriter.
-    summary = tf.Summary()
-    value = summary.value.add()
-    value.simple_value = sum_recalls
-    value.tag = "recall"
-    summary_writer.add_summary(summary, global_step)
-
-
-    # Log precision to the SummaryWriter.
-    summary = tf.Summary()
-    value = summary.value.add()
-    value.simple_value = sum_precisions
-    value.tag = "precision"
-    summary_writer.add_summary(summary, global_step)
-
-
-    # Log f1 to the SummaryWriter.
-    summary = tf.Summary()
-    value = summary.value.add()
-    value.simple_value = sum_precisions
-    value.tag = "f1_score"
-    summary_writer.add_summary(summary, global_step)
-
-
+    
     # Write the Events file to the eval directory.
     summary_writer.flush()
     tf.logging.info("Finished processing evaluation at global step %d.",global_step)
