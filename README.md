@@ -21,6 +21,10 @@ The following packages are required to run the code:
 To train the model you will need to provide training data in native TFRecord format. The TFRecord format consists of a set of sharded files containing serialized tf.SequenceExample protocol buffers. Each tf.SequenceExample proto contains a label and a tensor with the EEG recording. First download the data from [(Bashivan et al. (2016))](https://github.com/pbashivan/EEGLearn/tree/master/Sample%20data). Then, run data/process_inputs.sh. This will generate a folder with a TFRecord for every participant.
 
 **Training the Model:**
+We use leave-subject-out cross validation approach. In each of the 13 folds, all trials belonging to one of the subjects were used as the test set. A number of samples equal to the test set were then randomly extracted from rest of data for validation set and the remaining samples were used as training set. 
+First set the path to DeepEEG properly (Lin14). 
+Then, run the training script train.sh. Do not forget to specify the patient on which the testing is performed.
+
 
  
  
