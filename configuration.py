@@ -40,10 +40,10 @@ class ModelConfig(object):
     self.label_name="trial/label"
 
     # Number of Models
-    nb_models=8
+    nb_models=7
 
     # Model Choice
-    model_choice=1
+    model_choice=2
 
     ################# Model0 ###############
     # RNN state size
