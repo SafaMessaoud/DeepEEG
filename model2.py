@@ -19,13 +19,13 @@ def rnn_elec_architecture(self,data):
 def cnn_elec_architecture(self,data):
   x=tf.expand_dims(data, 3) 
   
-  kernel_width=model2_kernel_width
-  kernel_hight=model2_kernel_hight
-  stride_width=model2_stride_width
+  kernel_width=self.config.model2_kernel_width
+  kernel_hight=self.config.model2_kernel_hight
+  stride_width=self.config.model2_stride_width
   
   output1=tf.contrib.layers.convolution2d(
   inputs= x,
-  num_outputs= model2_output1_dim , 
+  num_outputs= self.config.model2_output1_dim , 
   kernel_size=[kernel_width,kernel_hight],
   stride=stride_width,
   normalizer_fn=self.normalizer_fn,
