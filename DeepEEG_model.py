@@ -16,7 +16,7 @@ import tensorflow as tf
 import numpy as np
 import sys
 import input_op 
-import configuration
+import configuration as config
 
 
 
@@ -81,7 +81,7 @@ class DeepEcog_model(object):
       # self.trial_data
        
       # Prefetch serialized SequenceExample protos.
-      input_queue = prefetch_input_data(
+      input_queue = input_op.prefetch_input_data(
       self.reader,
       input_file_pattern,
       is_training=self.is_training(),
@@ -108,10 +108,10 @@ class DeepEcog_model(object):
         # Batch inputs.
         queue_capacity = (2 * num_fetching_threads *batch_size)
 
-        b_label, b_trial_time_ecog= batch_with_dynamic_pad(trials_and_label,batch_size=self.config.batch_size,queue_capacity=queue_capacity)
+        b_label, b_trial_data= input_op.batch_data(trials_and_label,batch_size=self.config.batch_size,queue_capacity=queue_capacity)
         
       self.label = b_label
-      self.word_data_time = b_word_time_ecog
+      self.trial_data = b_trial_data
       
     def build_model(self):
       if (self.config.model_choice==0):
