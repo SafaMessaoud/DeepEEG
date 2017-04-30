@@ -42,7 +42,7 @@ def main():
 
 
   #check if the model number is valid
-  if ((args.model_choice<1) or (args.model_choice>model_config.nb_models)):
+  if (args.model_choice>model_config.nb_models):
     tf.logging.info("the number of the model should be between 1 and %d", model_config.nb_models)
     return
 
