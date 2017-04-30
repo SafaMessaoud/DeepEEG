@@ -80,6 +80,30 @@ class ModelConfig(object):
     # Electrode representation dimension	 
     self.model3_att_elec_dim=self.model3_rnn_state_size
 
+    ################# Model4 ###############
+    # RNN state size	 
+    self.model4_lstm_state_size	= 10
+
+    ################# Model5 ###############
+    # RNN state size	 
+    self.model5_lstm_state_size=10
+
+    # Number of output filters for the first convolutional layer
+    self.model5_output1_dim=10
+
+    # Number of output filters for the first convolutional layer
+    self.model5_output2_dim=3
+
+    # Dimension of the CNN output 
+    self.model5_cnn_representation_size=3
+
+    ################# Model6 ###############
+    # RNN state size	 
+    self.model6_lstm_state_size=10
+    
+    # Electrode representation dimension
+    self.model6_att_elec_dim=3		
+	
   ################ Training Parameters ################
     # Batch size
     self.batch_size=128
