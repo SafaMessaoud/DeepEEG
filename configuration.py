@@ -39,8 +39,12 @@ class ModelConfig(object):
     # Label name
     self.label_name="trial/label"
 
-    model_choice
-    nb_models
+    # Number of Models
+    nb_models=8
+
+    # Model Choice
+    model_choice=1
+    
     
     
     ################# Model0 ###############
