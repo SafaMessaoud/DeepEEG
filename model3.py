@@ -17,12 +17,12 @@ def rnn_elec_architecture(self,data):
   return output1
 
 def model3_elec_attention(self,elec_current_time):
-  att_embed_W1 = tf.Variable(tf.random_uniform([self.model3_att_elec_dim, self.model3_att_elec_dim], -0.1,0.1), name='model3_att_W_elec1')
-  att_embed_W2 = tf.Variable(tf.random_uniform([self.model3_att_elec_dim, 1], -0.1,0.1), name='model3_att_W_elec2')
-  att_embed_b1 = tf.Variable(tf.zeros([self.model3_att_elec_dim]), name='model3_att_b_elec1')
+  att_embed_W1 = tf.Variable(tf.random_uniform([self.config.model3_att_elec_dim, self.config.model3_att_elec_dim], -0.1,0.1), name='model3_att_W_elec1')
+  att_embed_W2 = tf.Variable(tf.random_uniform([self.config.model3_att_elec_dim, 1], -0.1,0.1), name='model3_att_W_elec2')
+  att_embed_b1 = tf.Variable(tf.zeros([self.config.model3_att_elec_dim]), name='model3_att_b_elec1')
   att_embed_b2 = tf.Variable(tf.zeros([1]), name='model3_att_b_elec2')
   
-  feat_tensor = tf.reshape(elec_current_time, [-1,self.model3_att_elec_dim])
+  feat_tensor = tf.reshape(elec_current_time, [-1,self.config.model3_att_elec_dim])
   
   e = tf.nn.relu(tf.matmul(feat_tensor, att_embed_W1)+att_embed_b1 )  # [batch * nb_electrodes, embed_att_elec_dim]
   e = tf.matmul(e,att_embed_W2)+ att_embed_b2  # [batch * nb_electrodes, 1]
