@@ -9,7 +9,7 @@ Continuous EEG was recorded from 64 electrodes placed over the scalp of the part
 
 **Architectures:** 
 We implemented 7 architectures to classify the memory worload
-![alt text](models0_3.png)
+![alt text](models1.png)
 
 **Requirements:**
 The following packages are required to run the code:
