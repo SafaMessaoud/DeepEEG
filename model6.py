@@ -7,7 +7,7 @@ def baseline_elec_attention(self,elec1,elec2,state_size):
     att_embed_b1 = tf.Variable(tf.zeros([self.config.model6_att_elec_dim]), name='model6_att_b_elec1')
     att_embed_b2 = tf.Variable(tf.zeros([1]), name='model6_att_b_elec2')
 
-    feat_tensor = tf.reshape(elec_current_time_x, [-1,self.config.model6_att_elec_dim])
+    feat_tensor = tf.reshape(elec2, [-1,self.config.model6_att_elec_dim])
 
     e = tf.nn.relu(tf.matmul(feat_tensor, att_embed_W1)+att_embed_b1 )  # [batch * nb_electrodes, embed_att_elec_dim]
     e = tf.matmul(e,self.att_embed_W2)+ att_embed_b2  # [batch * nb_electrodes, 1]
@@ -16,7 +16,7 @@ def baseline_elec_attention(self,elec1,elec2,state_size):
     alphas = tf.nn.softmax(e)    
     alphas = tf.reshape(alphas, [ self.config.batch_size, max_nb_channels,1 ])
 
-    attention_list = tf.multiply(alphas,elec_current_time)
+    attention_list = tf.multiply(alphas,elec1)
     output = tf.reduce_sum(attention_list,1)  #[batch_size,electrode_representation_size]
 
     return output
