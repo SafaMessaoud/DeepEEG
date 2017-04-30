@@ -75,7 +75,7 @@ def model1(self):
     elec_current_time=tf.reshape(elec_current_time, [ batch_size , -1])
     
     
-  with tf.variable_scope("logits") as logits_scope:
+  with tf.variable_scope("model1_logits") as logits_scope:
     logits = tf.contrib.layers.fully_connected(
     inputs=elec_current_time,
     num_outputs=self.config.num_classes,
