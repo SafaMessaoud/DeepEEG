@@ -15,29 +15,32 @@ class ModelConfig(object):
   # Wrapper class for model hyperparameters
   def __init__(self):
   ################ Model Parameters ################
-		# Number of electrodes 
-		self.nb_channels=64,
+    # Number of electrodes 
+    self.nb_channels=64,
 
-		# Number of frequencies
-		self.nb_freq=3
+    # Number of frequencies
+    self.nb_freq=3
 
-		# Number of time windows
-		self.nb_time_windows=7
+    # Number of time windows
+    self.nb_time_windows=7
 
-		# Number of samples
-		self.nb_samples=2670
+    # Number of samples
+    self.nb_samples=2670
 
-		# Total number of models
-		self.nb_models=8
+    # Total number of models
+    self.nb_models=8
 
     # Number of Classes
-		self.num_classes=4
+    self.num_classes=4
     
     # Trial data name
-    self.sample_name=
+    self.sample_name="trial/sample"
     
     # Label name
-    self.label_name=
+    self.label_name="trial/label"
+
+    model_choice
+    nb_models
     
     
     ################# Model0 ###############
@@ -60,7 +63,9 @@ class ModelConfig(object):
     self.model3_rnn_state_size=40
     self.model3_att_elec_dim=self.model3_rnn_state_size
 
-
+  ################ Training Parameters ################
+    self.batch_size=128
+	
 
 		learning_rate_decay_factor
 		optimizer
