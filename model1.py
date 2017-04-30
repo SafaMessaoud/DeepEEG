@@ -4,7 +4,7 @@ def rnn_elec_architecture(self,data):
   #reshape to: [nb_time_windows,batch_size*nb_channels,nb_freq]
   rnn_inputs = tf.transpose(data, [2,0,1])
   
-  cell = tf.contrib.rnn.LSTMCell(num_units=self.config.model0_rnn_state_size, state_is_tuple=False)
+  cell = tf.contrib.rnn.LSTMCell(num_units=self.config.model1_rnn_state_size, state_is_tuple=False)
   state1 = tf.zeros([self.config.batch_size*self.config.nb_channels , cell.state_size])
   
   for time  in range(self.config.nb_time_windows) :
