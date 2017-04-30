@@ -25,6 +25,9 @@ We use leave-subject-out cross validation approach. In each of the 13 folds, all
 First set the path to DeepEEG properly (Lin14). 
 Then, run the training script train.sh. Do not forget to specify the patient on which the testing is performed.
 
+**Evaluating and Testing the Model:**
+Run the evaluation script evaluate.sh in a separate process. This will log evaluation metrics to TensorBoard which allows training progress to be monitored in real-time. You can use the same script to evaluate the model on thetest data. Make sure you set the path to the testing folder properly.
 
- 
- 
+**Tensorboard:**
+Run a TensorBoard server in a separate process for real-time monitoring of training progress and evaluation metrics. 
+Once TensorBoard is running, navigate your web browser (preferably google chrome) to localhost:6006 to view the TensorBoard.
