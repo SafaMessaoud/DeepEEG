@@ -16,6 +16,35 @@ def rnn_elec_architecture(self,data):
       
   return output1
 
+def model3_elec_attention(self,elec_current_time):
+  att_embed_W1 = tf.Variable(tf.random_uniform([self.model3_att_elec_dim, self.model3_att_elec_dim], -0.1,0.1), name='model3_att_W_elec1')
+  att_embed_W2 = tf.Variable(tf.random_uniform([self.model3_att_elec_dim, 1], -0.1,0.1), name='model3_att_W_elec2')
+  att_embed_b1 = tf.Variable(tf.zeros([self.model3_att_elec_dim]), name='model3_att_b_elec1')
+  att_embed_b2 = tf.Variable(tf.zeros([1]), name='model3_att_b_elec2')
+  
+  feat_tensor = tf.reshape(elec_current_time, [-1,self.model3_att_elec_dim])
+  
+  e = tf.nn.relu(tf.matmul(feat_tensor, att_embed_W1)+att_embed_b1 )  # [batch * nb_electrodes, embed_att_elec_dim]
+  e = tf.matmul(e,att_embed_W2)+ att_embed_b2  # [batch * nb_electrodes, 1]
+  e = tf.reshape(e, [ batch_size, max_nb_channels ])  # [batch , nb_electrodes]
+  e_hat_exp =  tf.exp(e) # [batch , nb_electrodes]
+  
+  #compute the dominator
+  denomin = tf.reduce_sum(e_hat_exp,1) # [batch]
+  denomin = denomin + tf.to_float(tf.equal(denomin, 0))   # regularize denominator
+  denomin = tf.expand_dims(denomin, 1) 
+  denomin = tf.tile(denomin, [1,self.config.nb_channels])  #expand denomin: [batch,nb_electrodes]
+  
+  #generate the attention weights
+  alphas = tf.div(e_hat_exp,denomin)
+  alphas = tf.reshape(alphas, [ self.config.batch_size, self.config.nb_channels,1 ])
+  
+  #attention_list : multiply alphas [batch,nb_electrodes,1] with [batch,nb_electrodes,electrode_representation_size]
+  attention_list = tf.multiply(alphas,elec_current_time)
+  output = tf.reduce_sum(attention_list,1)  #[batch_size,electrode_representation_size]
+  
+  return output
+
 
 
 
@@ -31,8 +60,8 @@ def model3(self):
     #reshape
     rnn_out=tf.reshape(rnn_output, [ batch_size, max_nb_channels , -1])
     
-    #Attention    
-    elec_current_time=cnn_elec_architecture(self,rnn_out) 
+    #Attention
+    elec_current_time=model3_elec_attention(self,rnn_out)
     elec_current_time=tf.reshape(elec_current_time, [ batch_size , -1])
     
     
