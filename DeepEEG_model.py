@@ -92,12 +92,12 @@ class DeepEcog_model(object):
       self.reader,
       input_file_pattern,
       is_training=self.is_training(),
-      batch_size=batch_size,
-      values_per_shard=values_per_input_shard,
-      input_queue_capacity_factor=input_queue_capacity_factor,
-      num_reader_threads=num_input_reader_threads)
+      batch_size=self.config.batch_size,
+      values_per_shard=self.config.values_per_input_shard,
+      input_queue_capacity_factor=self.config.input_queue_capacity_factor,
+      num_reader_threads=self.config.num_input_reader_threads)
 
-      assert num_fetching_threads % 2 == 0
+      assert self.config.num_fetching_threads % 2 == 0
 
       trials_and_label=[]
       
@@ -113,7 +113,7 @@ class DeepEcog_model(object):
         trials_and_label.append([enc_trial_data, enc_label  ])
 
         # Batch inputs.
-        queue_capacity = (2 * num_fetching_threads *batch_size)
+        queue_capacity = (2 * self.config.num_fetching_threads *self.config.batch_size)
 
         b_label, b_trial_data= input_op.batch_data(trials_and_label,batch_size=self.config.batch_size,queue_capacity=queue_capacity)
         
