@@ -17,7 +17,14 @@ import numpy as np
 import sys
 import input_op 
 import configuration as config
-
+import model0
+import model1
+import model2
+import model3
+import model4
+import model5
+import model6
+import model7
 
 
 class DeepEcog_model(object):
@@ -115,21 +122,21 @@ class DeepEcog_model(object):
       
     def build_model(self):
       if (self.config.model_choice==0):
-        logits=model0(self)
+        logits=model0.model(self)
       elif (self.config.model_choice==1):
         logits=model1(self)      
       elif (self.config.model_choice==2):
-        logits=model2(self)      
+        logits=model2.model(self)      
       elif (self.config.model_choice==3):
-        logits=model3(self)      
+        logits=model3.model(self)      
       elif (self.config.model_choice==4):
-        logits=model4(self)      
+        logits=model4.model(self)      
       elif (self.config.model_choice==5):
-        logits=model5(self)      
+        logits=model5.model(self)      
       elif (self.config.model_choice==6):
-        logits=model6(self)      
+        logits=model6.model(self)      
       elif (self.config.model_choice==7):
-        logits=model7(self)            
+        logits=model7.model(self)            
       
       # cast Logits and Label
       logits = tf.cast(logits, tf.float64)
