@@ -167,31 +167,30 @@ def main():
   with g.as_default():
     # Build the model for evaluation.
     model_config = configuration.ModelConfig()
-		model_config.input_file_pattern = args.input_file_pattern
-		model_config.model_choice = args.model_choice
+    model_config.input_file_pattern = args.input_file_pattern
+    model_config.model_choice = args.model_choice
 		
-		model = DeepEcog_model.DeepEEG_model(model_config, mode="eval")
+    model = DeepEcog_model.DeepEEG_model(model_config, mode="eval")
 
-		model.build()
+    model.build()
 
-		# Create the Saver to restore model Variables.
-		saver = tf.train.Saver()
+    # Create the Saver to restore model Variables.
+    saver = tf.train.Saver()
 
-		# Create the summary operation and the summary writer.
-		summary_op = tf.summary.merge_all()
-		summary_writer = tf.summary.FileWriter(eval_dir_log,g)
+    # Create the summary operation and the summary writer.
+    summary_op = tf.summary.merge_all()
+    summary_writer = tf.summary.FileWriter(eval_dir_log,g)
 
-		g.finalize()
+    g.finalize()
 
-		# Run a new evaluation run every eval_interval_secs.
-		while True:
-			start = time.time()
-			tf.logging.info("Starting evaluation at " + time.strftime(
-					"%Y-%m-%d-%H:%M:%S", time.localtime()))
-			do_eval(model, saver, summary_writer, summary_op,args.checkpoint_dir,args.number_eval_examples,args.min_global_step)
-			time_to_next_eval = start + args.eval_interval_secs - time.time()
-			if time_to_next_eval > 0:
-				time.sleep(time_to_next_eval)
+    # Run a new evaluation run every eval_interval_secs.
+    while True:
+        start = time.time()
+        tf.logging.info("Starting evaluation at " + time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime()))
+        do_eval(model, saver, summary_writer, summary_op,args.checkpoint_dir,args.number_eval_examples,args.min_global_step)
+        time_to_next_eval = start + args.eval_interval_secs - time.time()
+        if time_to_next_eval > 0:
+            time.sleep(time_to_next_eval)
 
 		
 
