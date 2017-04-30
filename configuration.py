@@ -84,56 +84,48 @@ class ModelConfig(object):
     # Batch size
     self.batch_size=128
 	
-    # Input Queue Capacity Factor
+    # number of values per input shard
+    self.values_per_input_shard = 100
+
+    # input queue capacity factor
     self.input_queue_capacity_factor =  2
-    
-    # Learning rate decay factor
-    learning_rate_decay_factor=0.5
 
+    # number of input reader threads
+    self.num_input_reader_threads = 1
 
-	
-	
+    # number of prefetching threads
+    self.num_fetching_threads = 4
 
-		
-		optimizer
+    # weight decay factor
+    self.weight_decay=0.00004
 
-		clip_gradients
-		
-		values_per_input_shard = 220
+    # frequency for saving summaries
+    self.save_summaries_secs=3
+    self.save_interval_secs=3
 
-   
+    # initial learning rate
+    self.initial_learning_rate = 2.0
 
+    # learning rate decay factor
+    self.learning_rate_decay_factor = 0.5
 
-sample_name
-label_name
+    # number of epochs for the learning rate decay
+    self.num_epochs_per_decay = 4.0
 
+    # maximum size to clip gradients
+    self.clip_gradients = 5.0
 
+    # optimizer
+    self.optimizer = "SGD"
 
+    # maximum number of checkpoints to keep
+    self.max_checkpoints_to_keep = 5
 
-values_per_input_shard = 100
-input_queue_capacity_factor =  2
-num_input_reader_threads = 1
-num_fetching_threads = 4
-weight_decay=0.00004
-save_summaries_secs=3
-save_interval_secs=3
-nb_time_samples = 7
-nb_freq= 3
-num_classes = 4
-max_nb_channels = 64
-batch_size = 128
-sample_name = "word/sample"
-label_name="word/label"
-initial_learning_rate = 2.0
-learning_rate_decay_factor = 0.5
-num_epochs_per_decay = 4.0
-clip_gradients = 5.0
-optimizer = "SGD"
-max_checkpoints_to_keep = 5
-num_examples_per_epoch = 1000
-number_of_steps=2000000
-log_every_n_steps=1
+    # number of examples per epoch
+    self.num_examples_per_epoch = 1000
 
+    # total number of global steps
+    self.number_of_steps=2000000
 
-
-
+    #frequency of logging
+    self.log_every_n_steps=1
