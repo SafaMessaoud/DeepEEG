@@ -63,6 +63,7 @@ class DeepEcog_model(object):
 
     # Evaluation metrics
     self.total_loss = None
+    self.batch_loss = None
     self.batch_accuracy = None
     
     # Global step Tensor (number of batches seen so far by the graph).
@@ -149,6 +150,7 @@ class DeepEcog_model(object):
       
       #add batch loss to the collection of losses 
       batch_loss = tf.cast(batch_loss, tf.float32)
+      self.batch_loss=batch_loss
       tf.losses.add_loss(batch_loss)
       total_loss = tf.losses.get_total_loss(add_regularization_losses=False)
       
