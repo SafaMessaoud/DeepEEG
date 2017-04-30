@@ -36,7 +36,7 @@ mkdir -p ${TEST_DIR}
 mkdir -p ${INPUT_FILE_PATTERN}
 
 #copy all the data in tf_record into train_dir
-cp -r ${TF_RECORD_FOLDER} ${INPUT_FILE_PATTERN}
+cp -r ${TF_RECORD_FOLDER}/* ${INPUT_FILE_PATTERN}
 
 #path to the tf_record of the subject considered for testing
 TEST_SUBJ='${HOME}/DeepEEG/data/train_dir/s1'
