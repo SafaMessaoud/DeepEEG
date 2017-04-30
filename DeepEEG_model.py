@@ -50,7 +50,7 @@ class DeepEcog_model(object):
     self.weight_initializer = tf.contrib.layers.xavier_initializer(dtype=tf.float32)
 
     # Weight regularizer
-    self.weights_regularizer=tf.contrib.layers.l2_regularizer(weight_decay)
+    self.weights_regularizer=tf.contrib.layers.l2_regularizer(self.config.weight_decay)
 
     # Bach normalization
     self.normalizer_fn = tf.contrib.layers.batch_norm
