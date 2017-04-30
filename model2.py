@@ -69,7 +69,7 @@ def model2(self):
     #reshape
     rnn_out=tf.reshape(rnn_output, [ batch_size, max_nb_channels , -1])
     
-    #1D Conv    
+    #2D Conv    
     elec_current_time=cnn_elec_architecture(self,rnn_out) 
     elec_current_time=tf.reshape(elec_current_time, [ batch_size , -1])
     
