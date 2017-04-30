@@ -16,3 +16,4 @@ We implemented 7 architectures to classify the memory worload
 The following packages are required to run the code:
 * Tensorflow 1.0 or greater
 * Python3
+
