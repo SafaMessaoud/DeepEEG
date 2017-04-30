@@ -136,4 +136,16 @@ def evaluate_model(sess, model, global_step, summary_writer, summary_op,num_eval
     tf.logging.info("Finished processing evaluation at global step %d.",global_step)
 
 
+def parse_arguments(parser):
+	parser.add_argument('checkpoint_dir', type=str, default= 'DeepEEG/model/train', metavar='<checkpoint_dir>', help='Directory for saving and loading model checkpoints')	
+	parser.add_argument('input_file_pattern', type=str,default='/Volumes/Safa_drive/deepL_data/eval_dir/val-?????-of-00008' , metavar='<input_file_pattern>', help='File pattern of sharded TFRecord input files.')
+	parser.add_argument('eval_dir_log', type=str,default='/Volumes/Safa_drive/deepL_data/eval_dir_log' , metavar='<eval_dir_log>', help='Directory to write event logs')
+	parser.add_argument('--number_eval_examples', type=int,default=10132 , metavar='<number_eval_examples>', help='number of examples in the evaluation set')
+	parser.add_argument('--log_every_n_steps', type=int, default=1 , metavar='<log_every_n_steps>', help='Frequency at which loss and global step are logged')
+	parser.add_argument('--eval_interval_secs', type=int, default=600 , metavar='<eval_interval_secs>', help='Interval between evaluation runs.')
+	parser.add_argument('--min_global_step', type=int, default=10 , metavar='<min_global_step>', help='Minimum global step to run evaluation.')
+	parser.add_argument('--model_choice', type=int,default=1 , metavar='<model_choice>', help='choose the model to be trained:\n (1)CNN+maxpool')
+
+	args = parser.parse_args()
+	return args
 
