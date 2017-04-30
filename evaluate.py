@@ -137,15 +137,64 @@ def evaluate_model(sess, model, global_step, summary_writer, summary_op,num_eval
 
         
 def parse_arguments(parser):
-    parser.add_argument('checkpoint_dir', type=str, default= 'DeepEEG/model/train', metavar='<checkpoint_dir>', help='Directory for saving and loading model checkpoints')	
-    parser.add_argument('input_file_pattern', type=str,default='DeepEEG/' , metavar='<input_file_pattern>', help='File pattern of sharded TFRecord input files.')
-    parser.add_argument('eval_dir_log', type=str,default='DeepEEG/model/eval' , metavar='<eval_dir_log>', help='Directory to write event logs')
-    parser.add_argument('--number_eval_examples', type=int,default=260 , metavar='<number_eval_examples>', help='number of examples in the evaluation set')
-    parser.add_argument('--log_every_n_steps', type=int, default=1 , metavar='<log_every_n_steps>', help='Frequency at which loss and global step are logged')
-    parser.add_argument('--eval_interval_secs', type=int, default=30 , metavar='<eval_interval_secs>', help='Interval between evaluation runs.')
-    parser.add_argument('--min_global_step', type=int, default=10 , metavar='<min_global_step>', help='Minimum global step to run evaluation.')
-    parser.add_argument('--model_choice', type=int,default=1 , metavar='<model_choice>', help='choose the model to evaluated')
+  parser.add_argument('checkpoint_dir', type=str, default= 'DeepEEG/model/train', metavar='<checkpoint_dir>', help='Directory for saving and loading model checkpoints')	
+  parser.add_argument('input_file_pattern', type=str,default='DeepEEG/data/eval_dir' , metavar='<input_file_pattern>', help='File pattern of sharded TFRecord input files.')
+  parser.add_argument('eval_dir_log', type=str,default='DeepEEG/model/eval' , metavar='<eval_dir_log>', help='Directory to write event logs')
+  parser.add_argument('--number_eval_examples', type=int,default=260 , metavar='<number_eval_examples>', help='number of examples in the evaluation set')
+  parser.add_argument('--log_every_n_steps', type=int, default=1 , metavar='<log_every_n_steps>', help='Frequency at which loss and global step are logged')
+  parser.add_argument('--eval_interval_secs', type=int, default=30 , metavar='<eval_interval_secs>', help='Interval between evaluation runs.')
+  parser.add_argument('--min_global_step', type=int, default=10 , metavar='<min_global_step>', help='Minimum global step to run evaluation.')
+  parser.add_argument('--model_choice', type=int,default=1 , metavar='<model_choice>', help='choose the model to evaluated')
 
-    args = parser.parse_args()
-    return args
+  args = parser.parse_args()
+  return args
 
+
+def main():
+  parser = argparse.ArgumentParser()
+  args = parse_arguments(parser)
+
+  #Runs evaluation in a loop, and logs summaries to TensorBoard."""
+  
+  # Create the evaluation directory if it doesn't exist.
+  eval_dir_log = args.eval_dir_log
+  if not tf.gfile.IsDirectory(eval_dir_log):
+    tf.logging.info("Creating log_eval directory: %s", eval_dir_log)
+    tf.gfile.MakeDirs(eval_dir_log)
+
+
+  g = tf.Graph()
+  with g.as_default():
+    # Build the model for evaluation.
+    model_config = configuration.ModelConfig()
+		model_config.input_file_pattern = args.input_file_pattern
+		model_config.model_choice = args.model_choice
+		
+		model = DeepEcog_model.DeepEEG_model(model_config, mode="eval")
+
+		model.build()
+
+		# Create the Saver to restore model Variables.
+		saver = tf.train.Saver()
+
+		# Create the summary operation and the summary writer.
+		summary_op = tf.summary.merge_all()
+		summary_writer = tf.summary.FileWriter(eval_dir_log,g)
+
+		g.finalize()
+
+		# Run a new evaluation run every eval_interval_secs.
+		while True:
+			start = time.time()
+			tf.logging.info("Starting evaluation at " + time.strftime(
+					"%Y-%m-%d-%H:%M:%S", time.localtime()))
+			do_eval(model, saver, summary_writer, summary_op,args.checkpoint_dir,args.number_eval_examples,args.min_global_step)
+			time_to_next_eval = start + args.eval_interval_secs - time.time()
+			if time_to_next_eval > 0:
+				time.sleep(time_to_next_eval)
+
+		
+
+
+if __name__ == "__main__":
+  main()
