@@ -26,7 +26,7 @@ def cnn_elec_architecture(self,data):
   
   output1=tf.contrib.layers.convolution2d(
   inputs= x,
-  num_outputs= model1_output1_dim , 
+  num_outputs= self.config.model1_output1_dim , 
   kernel_size=[kernel_width,kernel_hight],
   stride=stride_width,
   normalizer_fn=self.normalizer_fn,
